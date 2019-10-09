@@ -1,4 +1,4 @@
-const { Student, validate } = require("../models/student")
+const { Student, validate } = require("../models/Student")
 const router = require("express").Router()
 const bcrypt = require("bcryptjs")
 const _ = require("lodash")
@@ -6,7 +6,7 @@ const auth = require("../middleware/auth")
 const jwt = require("jsonwebtoken")
 
 router.get("/me", auth, async (req, res) => {
-  const student = await Student.findById(req.student._id).select({ password: -1 })
+  const student = await Student.findById(req.user._id).select({ password: -1 })
   res.send(student)
 })
 
