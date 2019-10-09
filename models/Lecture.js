@@ -5,8 +5,8 @@ const LectureSchema = new mongoose.Schema({
   name: { type: String, required: true },
   lectureUrl: { type: String, required: true },
   thumbnailImageUrl: { type: String, required: true },
-  isPublished: { type: Boolean, defualt: false },
-  dateCreated: { type: Date, defualt: Date.now() }
+  isPublished: { type: Boolean, default: false },
+  dateCreated: { type: Date, default: Date.now() }
 })
 
 const Lecture = mongoose.model("lecture", LectureSchema)

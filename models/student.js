@@ -9,7 +9,7 @@ const StudentSchema = new mongoose.Schema({
 })
 
 StudentSchema.methods.generateAuthToken = function() {
-  return jwt.sign({ _id: this.id }, process.env.jwtPrivateKey)
+  return jwt.sign({ _id: this._id }, process.env.jwtPrivateKey)
 }
 
 const Student = mongoose.model("student", StudentSchema)

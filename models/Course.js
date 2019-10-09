@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const Joi = require("@hapi/joi")
+
 const jwt = require("jsonwebtoken")
 
 const CourseSchema = new mongoose.Schema({
@@ -12,7 +13,8 @@ const CourseSchema = new mongoose.Schema({
   lectures: [
     { type: mongoose.Schema.Types.ObjectId, ref: "Lecture", required: true }
   ],
-  dateCreated: { type: Date, defualt: Date.now() }
+  dateCreated: { type: Date, defualt: Date.now() },
+  isPublished: { type: Boolean, default: false }
 })
 
 const Course = mongoose.model("course", CourseSchema)

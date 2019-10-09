@@ -8,6 +8,10 @@ const TeacherSchema = new mongoose.Schema({
   courses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }]
 })
 
+TeacherSchema.methods.generateAuthToken = function() {
+  return jwt.sign({ _id: this.id, isTeacher: true }, process.env.jwtPrivateKey)
+}
+
 const Teacher = mongoose.model("teacher", TeacherSchema)
 
 function validateTeacher(teacher) {
