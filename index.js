@@ -1,5 +1,5 @@
 require("dotenv").config()
-const Joi = require("joi")
+const Joi = require("@hapi/joi")
 Joi.objectId = require("joi-objectid")(Joi)
 const express = require("express")
 const app = express()
@@ -10,10 +10,10 @@ const helmet = require("helmet")
 /**
  * Make sure the jwt private key is defined
  */
-if (!process.env.jwtPrivateKey) {
-  console.log("jwtprivatekey is not defined")
-  process.exit(1)
-}
+// if (!process.env.jwtPrivateKey) {
+//   console.log("jwtprivatekey is not defined")
+//   process.exit(1)
+// }
 
 /**
  * Setup basic config
@@ -38,7 +38,6 @@ mongoose
 if (app.get("env") == "development") {
   app.use(morgan("dev"))
 }
-
 
 /**
  * Startup server
