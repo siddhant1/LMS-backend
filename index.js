@@ -16,6 +16,13 @@ if (!process.env.jwtPrivateKey) {
 }
 
 /**
+ *User Defined Routes
+ */
+const course = require("./routes/course")
+const student = require("./routes/student")
+const teacher = require("./routes/teacher")
+
+/**
  * Setup basic config
  */
 app.use(express.json())
@@ -28,9 +35,17 @@ app.use(helmet.noCache())
  * Connect to database
  */
 mongoose
-  .connect("<url>")
+  .connect("url")
   .then(() => console.log("connected to mongoDB"))
   .catch(() => console.log("there is an error maybe"))
+
+/**
+ * Setup routes
+ */
+
+app.use("/api/course", course)
+app.use("/api/student", student)
+app.use("/api/teacher", teacher)
 
 /**
  * Setup log

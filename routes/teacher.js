@@ -3,7 +3,7 @@ const router = require("express").Router()
 const bcrypt = require("bcryptjs")
 
 const _ = require("lodash")
-const auth = require("../middleware/auth")
+const auth = require("../middlewares/auth")
 const jwt = require("jsonwebtoken")
 
 router.get("/me", auth, async (req, res) => {

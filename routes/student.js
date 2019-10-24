@@ -2,7 +2,7 @@ const { Student, validate } = require("../models/Student")
 const router = require("express").Router()
 const bcrypt = require("bcryptjs")
 const _ = require("lodash")
-const auth = require("../middleware/auth")
+const auth = require("../middlewares/auth")
 const jwt = require("jsonwebtoken")
 
 router.get("/me", auth, async (req, res) => {
@@ -32,4 +32,4 @@ router.post("/", async (req, res) => {
     .send(_.pick(student, ["_id", "name", "email"]))
 })
 
-module.exports = router;
+module.exports = router
