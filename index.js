@@ -1,5 +1,5 @@
 require("dotenv").config()
-const Joi = require("joi")
+const Joi = require("@hapi/joi")
 Joi.objectId = require("joi-objectid")(Joi)
 const express = require("express")
 const app = express()
@@ -38,7 +38,6 @@ mongoose
 if (app.get("env") == "development") {
   app.use(morgan("dev"))
 }
-
 
 /**
  * Startup server
