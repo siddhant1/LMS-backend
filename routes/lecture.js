@@ -11,11 +11,11 @@ router.get(
   async (req, res) => {
     if (req.user && req.user.isTeacher) {
       const lecture = await Lecture.find({ createdBy: req.user._id })
-      res.json(lecture)
+      res.status(200).send(lecture)
       return
     }
     const lecture = await Lecture.find({ isPublished: true })
-    res.json(lecture)
+    res.status(200).send(lecture)
   }
 )
 
@@ -28,21 +28,21 @@ router.get(
         createdBy: req.user._id,
         _id: req.params.id
       })
-      res.json(lecture)
+      res.status(200).send(lecture)
       return
     }
     const lecture = await Lecture.find({
       isPublished: true,
       _id: req.params.id
     })
-    res.json(lecture)
+    res.status(200).send(lecture)
   }
 )
 
 router.put("/:id", auth, teacherAuth, async (req, res) => {
   const { error } = validate(req.body)
   if (error) {
-    return res.status(400).json()
+    return res.status(200).send()
   }
 
   let lecture = await Lecture.findById(req.params.id)
@@ -63,7 +63,7 @@ router.put("/:id", auth, teacherAuth, async (req, res) => {
       req.params.id,
       updatedLecture
     )
-    res.status(200).json({
+    res.status(200).send({
       message: "Lecture Successfully Updated"
     })
   } catch (e) {

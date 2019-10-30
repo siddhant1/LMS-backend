@@ -1,4 +1,5 @@
 const { Course, validate } = require("../models/Course")
+const { Lectures } = require("../models/Lecture")
 const router = require("express").Router()
 const teacherAuth = require("../middlewares/teacherAuth")
 const auth = require("../middlewares/auth")
@@ -7,7 +8,7 @@ const _ = require("lodash")
 
 router.get(
   "/",
-  () => auth(req, res, next, false),
+  (req, res, next) => auth(req, res, next, false),
   async (req, res) => {
     if (req.user && req.user.isTeacher) {
       const courses = await Course.find({ createdBy: req.user._id }).populate(
@@ -25,7 +26,7 @@ router.get(
 
 router.get(
   "/:id",
-  () => auth(req, res, next, false),
+  (req, res, next) => auth(req, res, next, false),
   async (req, res) => {
     if (req.user && req.user.isTeacher) {
       const courses = await Course.find({
@@ -87,7 +88,7 @@ router.post("/", auth, teacherAuth, async (req, res) => {
   if (error) {
     return res.status(400).json(error.details[0].message)
   }
-
+  console.log("user ", req.user)
   const course = new Course({
     name: req.body.name,
     createdBy: req.user,

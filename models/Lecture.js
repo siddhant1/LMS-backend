@@ -12,12 +12,12 @@ const LectureSchema = new mongoose.Schema({
 const Lecture = mongoose.model("lecture", LectureSchema)
 
 function validateLecture(lecture) {
-  const schema = {
+  const schema = Joi.object({
     name: Joi.string().required(),
     lectureUrl: Joi.string().required(),
     thumbnailImageUrl: Joi.string().required()
-  }
-  return Joi.validate(lecture, schema)
+  })
+  return schema.validate(lecture)
 }
 
 exports.validate = validateLecture

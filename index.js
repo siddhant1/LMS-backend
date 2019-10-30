@@ -36,7 +36,7 @@ app.use(helmet.noCache())
  * Connect to database
  */
 mongoose
-  .connect("mongodb://shakti97:shakti00@ds137008.mlab.com:37008/lms-backend")
+  .connect("url")
   .then(() => console.log("connected to mongoDB"))
   .catch(() => console.log("there is an error maybe"))
 
