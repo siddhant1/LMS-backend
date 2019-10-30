@@ -7,7 +7,7 @@ const _ = require("lodash")
 
 router.get(
   "/",
-  () => auth(req, res, next, false),
+  (req,res,next) => auth(req, res, next, false),
   async (req, res) => {
     if (req.user && req.user.isTeacher) {
       const lecture = await Lecture.find({ createdBy: req.user._id })
