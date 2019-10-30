@@ -21,13 +21,6 @@ if (!process.env.jwtPrivateKey) {
 const course = require("./routes/course")
 const student = require("./routes/student")
 const teacher = require("./routes/teacher")
-
-/**
- *User Defined Routes
- */
-const course = require("./routes/course")
-const student = require("./routes/student")
-const teacher = require("./routes/teacher")
 const lecture = require("./routes/lecture")
 
 /**

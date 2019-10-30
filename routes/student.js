@@ -28,6 +28,7 @@ router.post("/", async (req, res) => {
   student.save()
   const token = student.generateAuthToken()
   res
+    .status(400)
     .header("x-auth-token", token)
     .send(_.pick(student, ["_id", "name", "email"]))
 })

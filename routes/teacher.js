@@ -17,7 +17,7 @@ router.post("/", async (req, res) => {
     res.status(400).send(error.details[0].message)
     return
   }
-  //Find teacher who are already registered  //Checked
+  //Find teacher who are already registered
   try {
     let teacher = await Teacher.findOne({ email: req.body.email })
     if (teacher) {
@@ -30,11 +30,12 @@ router.post("/", async (req, res) => {
       teacher.save()
       const token = teacher.generateAuthToken()
       res
+        .status(400)
         .header("x-auth-token", token)
-        .send(_.pickteacher, ["_id", "name", "email"])
+        .send(_.pick(teacher, ["_id", "name", "email"]))
     }
   } catch (error) {
-    res.status(503).send(`Internal Server Error $9711{error}`)
+    res.status(503).send(`Internal Server Error ${error}`)
   }
 })
 
