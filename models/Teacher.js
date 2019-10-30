@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const Joi = require("@hapi/joi")
+const jwt = require("jsonwebtoken")
 
 const TeacherSchema = new mongoose.Schema({
   name: { type: String, required: true },
@@ -15,14 +16,14 @@ TeacherSchema.methods.generateAuthToken = function() {
 const Teacher = mongoose.model("teacher", TeacherSchema)
 
 function validateTeacher(teacher) {
-  const schema = {
+  const schema = Joi.object({
     name: Joi.string().required(),
     email: Joi.string()
       .required()
       .email(),
     password: Joi.string().required()
-  }
-  return Joi.validate(teacher, schema)
+  })
+  return schema.validate(teacher)
 }
 
 exports.Teacher = Teacher

@@ -10,7 +10,7 @@ router.get(
   () => auth(req, res, next, false),
   async (req, res) => {
     if (req.user && req.user.isTeacher) {
-      const Courses = await Course.find({ createdBy: req.user._id }).populate(
+      const courses = await Course.find({ createdBy: req.user._id }).populate(
         "lectures"
       )
       res.json(courses)
@@ -28,7 +28,7 @@ router.get(
   () => auth(req, res, next, false),
   async (req, res) => {
     if (req.user && req.user.isTeacher) {
-      const Courses = await Course.find({
+      const courses = await Course.find({
         createdBy: req.user._id,
         _id: req.params.id
       }).populate("lectures")
@@ -55,7 +55,7 @@ router.put("/:id", auth, teacherAuth, async (req, res) => {
     return
   }
 
-  const { user, lectures, createdBy, isPublished } = req.body
+  const { user, lectures, isPublished } = req.body
   const updatedCourse = {
     name: user,
     lectures,
