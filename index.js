@@ -10,10 +10,10 @@ const helmet = require("helmet")
 /**
  * Make sure the jwt private key is defined
  */
-if (!process.env.jwtPrivateKey) {
-  console.log("jwtprivatekey is not defined")
-  process.exit(1)
-}
+// if (!process.env.jwtPrivateKey) {
+//   console.log("jwtprivatekey is not defined")
+//   process.exit(1)
+// }
 
 /**
  * Setup basic config
