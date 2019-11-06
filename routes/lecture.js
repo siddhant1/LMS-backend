@@ -1,13 +1,14 @@
 const { Lecture, validate } = require("../models/Lecture")
 const router = require("express").Router()
 const teacherAuth = require("../middlewares/teacherAuth")
+var ObjectId = require("mongoose").Types.ObjectId
 const auth = require("../middlewares/auth")
 const jwt = require("jsonwebtoken")
 const _ = require("lodash")
 
 router.get(
   "/",
-  (req,res,next) => auth(req, res, next, false),
+  (req, res, next) => auth(req, res, next, false),
   async (req, res) => {
     if (req.user && req.user.isTeacher) {
       const lecture = await Lecture.find({ createdBy: req.user._id })
@@ -21,7 +22,7 @@ router.get(
 
 router.get(
   "/:id",
-  (req,res,next) => auth(req, res, next, false),
+  (req, res, next) => auth(req, res, next, false),
   async (req, res) => {
     if (req.user && req.user.isTeacher) {
       const lecture = await Lecture.find({
@@ -38,6 +39,33 @@ router.get(
     res.json(lecture)
   }
 )
+
+router.post("/feedback", auth, async (req, res) => {
+  const isValid = ObjectId.isValid(req.user._id)
+  if (!isValid) {
+    return res.status(400).send("send a valid id");
+  }
+
+  if(!req.body.comment){
+    return res.status(400).send('Provide comment text');
+  }
+
+  if(!req.body.lecture){
+    return res.status(400).send('Provide Lecture');
+  }
+
+  const newFeedback = {
+    comment: req.body.comment,
+    user: req.user.id
+  }
+
+  await Lecture.update(
+    { _id: req.body.lecture },
+    { $push: { feedback: newFeedback } }
+  )
+
+  res.status(200).send("Commented")
+})
 
 router.put("/:id", auth, teacherAuth, async (req, res) => {
   const { error } = validate(req.body)
@@ -63,9 +91,7 @@ router.put("/:id", auth, teacherAuth, async (req, res) => {
       req.params.id,
       updatedLecture
     )
-    res.status(200).json({
-      message: "Lecture Successfully Updated"
-    })
+    res.status(200).json(lecture)
   } catch (e) {
     res.status(500).json({
       message: "Internal Server Error"
