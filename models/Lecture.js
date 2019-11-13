@@ -6,7 +6,8 @@ const LectureSchema = new mongoose.Schema({
   lectureUrl: { type: String, required: true },
   thumbnailImageUrl: { type: String, required: true },
   isPublished: { type: Boolean, default: false },
-  dateCreated: { type: Date, default: Date.now() }
+  dateCreated: { type: Date, default: Date.now() },
+  feedback: [{ comment: String, user: mongoose.Schema.Types.ObjectId }]
 })
 
 const Lecture = mongoose.model("lecture", LectureSchema)
