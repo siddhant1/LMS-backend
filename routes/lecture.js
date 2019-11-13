@@ -43,15 +43,15 @@ router.get(
 router.post("/feedback", auth, async (req, res) => {
   const isValid = ObjectId.isValid(req.user._id)
   if (!isValid) {
-    return res.status(400).send("send a valid id");
+    return res.status(400).send("send a valid id")
   }
 
-  if(!req.body.comment){
-    return res.status(400).send('Provide comment text');
+  if (!req.body.comment) {
+    return res.status(400).send("Provide comment text")
   }
 
-  if(!req.body.lecture){
-    return res.status(400).send('Provide Lecture');
+  if (!req.body.lecture) {
+    return res.status(400).send("Provide Lecture")
   }
 
   const newFeedback = {

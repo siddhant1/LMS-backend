@@ -16,6 +16,14 @@ const helmet = require("helmet")
 // }
 
 /**
+ *User Defined Routes
+ */
+const course = require("./routes/course")
+const student = require("./routes/student")
+const teacher = require("./routes/teacher")
+const lecture = require("./routes/lecture")
+
+/**
  * Setup basic config
  */
 app.use(express.json())
@@ -28,13 +36,23 @@ app.use(helmet.noCache())
  * Connect to database
  */
 mongoose
-  .connect("<url>")
+  .connect("url")
   .then(() => console.log("connected to mongoDB"))
   .catch(() => console.log("there is an error maybe"))
 
 /**
+ * Setup routes
+ */
+
+app.use("/api/course", course)
+app.use("/api/student", student)
+app.use("/api/teacher", teacher)
+app.use("/api/lecture", lecture)
+
+/**
  * Setup log
  */
+
 if (app.get("env") == "development") {
   app.use(morgan("dev"))
 }

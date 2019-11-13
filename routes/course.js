@@ -1,16 +1,17 @@
 const { Course, validate } = require("../models/Course")
+const { Lectures } = require("../models/Lecture")
 const router = require("express").Router()
 const teacherAuth = require("../middlewares/teacherAuth")
-const auth = require("../middleware/auth")
+const auth = require("../middlewares/auth")
 const jwt = require("jsonwebtoken")
 const _ = require("lodash")
 
 router.get(
   "/",
-  () => auth(req, res, next, false),
+  (req, res, next) => auth(req, res, next, false),
   async (req, res) => {
     if (req.user && req.user.isTeacher) {
-      const Courses = await Course.find({ createdBy: req.user._id }).populate(
+      const courses = await Course.find({ createdBy: req.user._id }).populate(
         "lectures"
       )
       res.json(courses)
@@ -25,10 +26,10 @@ router.get(
 
 router.get(
   "/:id",
-  () => auth(req, res, next, false),
+  (req, res, next) => auth(req, res, next, false),
   async (req, res) => {
     if (req.user && req.user.isTeacher) {
-      const Courses = await Course.find({
+      const courses = await Course.find({
         createdBy: req.user._id,
         _id: req.params.id
       }).populate("lectures")
@@ -55,10 +56,10 @@ router.put("/:id", auth, teacherAuth, async (req, res) => {
     return
   }
 
-  const { user, lectures, createdBy, isPublished } = req.body
+  const { user, lectures, isPublished } = req.body
   const updatedCourse = {
     name: user,
-    lectures
+    lectures,
     isPublished
   }
   try {
@@ -68,19 +69,18 @@ router.put("/:id", auth, teacherAuth, async (req, res) => {
     })
   } catch (e) {
     res.status(500).json({
-        message: "Internal Server Error"
+      message: "Internal Server Error"
     })
   }
 })
 
 router.delete("/:id", auth, teacherAuth, async (req, res) => {
-
- const course = await Course.findByIdAndRemove(req.params.id);
+  const course = await Course.findByIdAndRemove(req.params.id)
 
   if (!course)
-    return res.status(404).send("The Course with the given ID was not found.");
+    return res.status(404).send("The Course with the given ID was not found.")
 
-  res.send(course);
+  res.send(course)
 })
 
 router.post("/", auth, teacherAuth, async (req, res) => {
@@ -88,7 +88,7 @@ router.post("/", auth, teacherAuth, async (req, res) => {
   if (error) {
     return res.status(400).json(error.details[0].message)
   }
-
+  console.log("user ", req.user)
   const course = new Course({
     name: req.body.name,
     createdBy: req.user,

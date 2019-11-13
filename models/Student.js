@@ -15,7 +15,7 @@ StudentSchema.methods.generateAuthToken = function() {
 const Student = mongoose.model("student", StudentSchema)
 
 function validateStudent(student) {
-  const schema = {
+  const schema = Joi.object({
     name: Joi.string().required(),
     email: Joi.string()
       .required()
@@ -23,9 +23,9 @@ function validateStudent(student) {
     password: Joi.string()
       .required()
       .max(255)
-  }
+  })
 
-  return Joi.validate(student, schema)
+  return schema.validate(student)
 }
 
 exports.Student = Student

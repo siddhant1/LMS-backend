@@ -20,11 +20,11 @@ const CourseSchema = new mongoose.Schema({
 const Course = mongoose.model("course", CourseSchema)
 
 function validateCourse(course) {
-  const schema = {
+  const schema = Joi.object({
     name: Joi.string().required(),
-    createdBy: Joi.objectId().required()
-  }
-  return Joi.validate(lecture, schema)
+    createdBy: Joi.objectId()
+  })
+  return schema.validate(course)
 }
 
 exports.Course = Course
