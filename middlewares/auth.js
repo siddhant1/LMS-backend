@@ -2,7 +2,9 @@ const jwt = require("jsonwebtoken")
 function auth(req, res, next, shouldThrow = true) {
   const token = req.header("x-auth-token")
   if (!shouldThrow && !token) {
-    next()
+    
+    next();
+    return;
   } else if (!shouldThrow && token) {
     try {
       const payload = jwt.verify(token, process.env.jwtPrivateKey)

@@ -36,13 +36,15 @@ app.use(helmet.noCache())
  * Connect to database
  */
 mongoose
-  .connect("url")
+  .connect("mongodb://siddhant:siddhant1@ds029939.mlab.com:29939/learning-management-system")
   .then(() => console.log("connected to mongoDB"))
   .catch(() => console.log("there is an error maybe"))
 
 /**
  * Setup routes
  */
+
+app.get("/", (req,res) => res.json({ message: "ok" }))
 
 app.use("/api/course", course)
 app.use("/api/student", student)

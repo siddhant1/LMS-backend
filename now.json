@@ -1,0 +1,19 @@
+{
+  "build": {
+    "env": {
+      "PORT": "3000",
+      "env": "prod",
+      "jwtPrivateKey": "123kjshdgjah"
+    }
+  },
+  "builds": [
+    {
+      "src": "./index.js",
+      "use": "@now/node-server" 
+    }
+  ],
+  "routes":[{
+      "src":"/",
+      "dest":"/"
+  }]
+}
